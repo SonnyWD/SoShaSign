@@ -1,3 +1,8 @@
-@import "./utils/tailwind.css";
+/* Importation des fichiers externes */
 @import "./utils/variables.css";
 @import "./utils/global.css";
+
+/* Déclaration des directives de Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

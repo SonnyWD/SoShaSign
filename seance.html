@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Séance</title>
+    <script type="module" src="/src/js/main.js"></script>
+</head>
+<body>
+    <body class="bg-gray-100 font-sans min-h-screen flex flex-col">
+        <nav class="bg-blue-600 p-4">
+            <img src="" alt="Logo" class="h-8 w-8 inline-block mr-4">
+            <ul class="flex space-x-4 text-white">
+                <li><a href="index.html">Acceuil</a></li>
+                <li><a href="#">Historique</a></li>
+                <li><a href="#">Questionnaire</a></li>
+            </ul>
+        </nav>
+        <main class="flex-grow container mx-auto p-4" x-data="{
+            cours: new URLSearchParams(window.location.search).get('cours')
+          }">
+            <h1 class="titre-cours text-2xl font-bold mb-4">Cours : <span x-text="cours"></span></h1>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://localhost:5173/signature-stagiaire.html?cours=css" alt="QR Code">
+            <div class="container-1">
+                <h2>Stagiaires</h2>
+                <h2>Présence</h2>
+            </div>
+            
+            <ul x-data="{ etudiants: ['Sonny', 'Shannon', 'Eric', 'Lisa', 'Ariella', 'Gvanca', 'Tom', 'Nelly', 'Mattis'] }">
+                <template x-for="e in etudiants">
+                    <li x-text="e"></li>
+                 </template>
+             </ul>
+        </main>
+        <footer class="bg-blue-600 p-4 text-white text-center">
+            <p>&copy; 2025 - MyDigital School</p>
+        </footer>
+</body>
+</html>

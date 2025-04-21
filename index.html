@@ -2,21 +2,67 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8" />
-        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>My Digital School - Développement côté client</title>
     </head>
-    <body>
-        <main rel="main" class="container mx-auto p-4">
-            <div class="flex flex-col items-center">
-                <div class="max-w-sm mb-2">
-                    <img src="/vite.svg" alt="" />
+    <body class="bg-gray-100 font-sans min-h-screen flex flex-col">
+        <nav class="bg-blue-600 p-4">
+            <img src="" alt="Logo" class="h-8 w-8 inline-block mr-4">
+            <ul class="flex space-x-4 text-white">
+                <li><a href="#">Cours</a></li>
+                <li><a href="#">Historique</a></li>
+                <li><a href="#">Questionnaire</a></li>
+            </ul>
+        </nav>
+        <main class="flex-grow container mx-auto p-4">
+            <div class="container-1 mb-8">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Cours du matin</h2>
+                <div x-data="{
+                    cours: [
+                        { nom: 'Framework CSS', enseignant: 'Tony Botalla', date: '22 avril 2025', lieu: 'La Cocagne' }
+                    ]
+                }">
+                    <template x-for="(c, i) in cours" :key="i">
+                        <div class="cours mb-4 p-4 border-2 border-red-500 bg-gray-50">
+                            <div class="infos-cours text-gray-700">
+                                <strong x-text="c.nom" class="text-lg font-bold"></strong>
+                                <div class="mt-2">
+                                    <span>Enseignant: <span x-text="c.enseignant"></span></span><br>
+                                    <span>Date: <span x-text="c.date"></span></span><br>
+                                    <span>Lieu: <span x-text="c.lieu"></span></span>
+                                </div>
+                            </div>
+                            <a :href="`seance.html?cours=${encodeURIComponent(c.nom)}`" class="cta mt-4 inline-block bg-blue-600 text-white px-6 py-2 rounded-full text-center hover:bg-blue-700 transition">Séance</a>
+                        </div>
+                    </template>
                 </div>
-                <h1 class="text-3xl text-primary font-bold underline">
-                    Ça tourne !
-                </h1>
+            </div>
+            <div class="container-1 mb-8">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Cours de l'après-midi</h2>
+                <div x-data="{
+                    cours: [
+                        { nom: 'Développement mobile', enseignant: 'Matthieu Tudisco', date: '22 avril 2025', lieu: 'La Cocagne' }
+                    ]
+                }">
+                    <template x-for="(c, i) in cours" :key="i">
+                        <div class="cours mb-4 p-4 border-2 border-red-500 bg-gray-50">
+                            <div class="infos-cours text-gray-700">
+                                <strong x-text="c.nom" class="text-lg font-bold"></strong>
+                                <div class="mt-2">
+                                    <span>Enseignant: <span x-text="c.enseignant"></span></span><br>
+                                    <span>Date: <span x-text="c.date"></span></span><br>
+                                    <span>Lieu: <span x-text="c.lieu"></span></span>
+                                </div>
+                            </div>
+                            <a :href="`seance.html?cours=${encodeURIComponent(c.nom)}`" class="cta mt-4 inline-block bg-blue-600 text-white px-6 py-2 rounded-full text-center hover:bg-blue-700 transition">Séance</a>
+                        </div>
+                    </template>
+                </div>
             </div>
         </main>
+        <footer class="bg-blue-600 p-4 text-white text-center">
+            <p>&copy; 2025 - MyDigital School</p>
+        </footer>
         <script type="module" src="/src/js/main.js"></script>
     </body>
 </html>
