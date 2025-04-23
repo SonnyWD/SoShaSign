@@ -12,6 +12,8 @@ export default {
         colors: {
           beige: '#fffcf7',
           bleu: '#1A202C',
+          beigeBloc: '#f7f3f0',
+          cta: '#cf6850'
         },
       },
     },
