@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr" x-data="courseEvaluation()" x-init="init()">
- 
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,28 +8,29 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
- 
-<body class="flex flex-col min-h-screen bg-gray-50 text-gray-800">
- 
-    <nav class="bg-blue-600 p-4 text-white flex justify-between items-center">
-        <img src="logos/logo sosha sign.png" alt="Logo" class="h-8 w-8" />
-        <ul class="flex space-x-6">
-            <li><a href="index.html" class="hover:underline">Accueil</a></li>
-            <li><a href="evaluation.html" class="hover:underline">Questionnaire</a></li>
+
+<body class="bg-beige font-sans min-h-screen flex flex-col justify-between">
+
+    <nav class="bg-beige p-4 flex justify-between pr-20 pl-20 border-b border-bleu">
+        <img src="public/SVG/logo-soshasignFichier 1.svg" alt="Logo" class="h-10 inline-block mr-4">
+        <ul class="flex space-x-4 text-bleu">
+            <li><a href="index.html">Cours</a></li>
+            <li><a href="#">Historique</a></li>
+            <li><a href="questionnaire.html">Questionnaire</a></li>
         </ul>
     </nav>
- 
+
     <main class="flex-grow container mx-auto px-8 py-10 space-y-6">
-        <div class="bg-gray-200 rounded p-4">
-            <h2 class="font-semibold text-lg">Cours</h2>
-            <p class="text-gray-700">
-                <span x-text="courseInfo.intervenant"></span> |
-                <span x-text="courseInfo.date"></span> |
-                <span x-text="courseInfo.heure"></span> |
-                <span x-text="courseInfo.lieu"></span>
+        <div class="container-1 mb-8 bg-beigeBloc p-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Cours</h2>
+            <p class="text-lg font-bold">
+                <span class="mr-5 p-2 pl-0 border-r-2 border-bleu" x-text="courseInfo.intervenant"></span> |
+                <span class="mr-5 p-2 pl-0 border-r-2 border-bleu" x-text="courseInfo.date"></span> |
+                <span class="mr-5 p-2 pl-0 border-r-2 border-bleu" x-text="courseInfo.heure"></span> |
+                <span class="mr-5 p-2 pl-0 border-r-2 border-bleu" x-text="courseInfo.lieu"></span>
             </p>
         </div>
- 
+
         <div class="space-y-2">
             <div class="flex justify-between items-center">
                 <p>Est-ce que le cours vous convient ?</p>
@@ -92,77 +93,77 @@
                 </div>
             </div>
         </div>
- 
- 
-        <div class="bg-gray-100 p-6 border rounded-md text-center">
+
+        <div class="container-1 mb-8 bg-beigeBloc p-8">
             <div class="flex flex-col items-center space-y-4">
                 <canvas id="signature-pad"
-                    class="border-2 border-gray-800 bg-gray-100 rounded-lg w-[300px] h-[300px]"></canvas>
+                    class="border-2 border-gray-800 mb-8 bg-beigeBloc rounded-lg w-[300px] h-[300px]"></canvas>
                 <div class="flex justify-between gap-4 w-[300px]">
                     <button id="clearBtn"
-                        class="bg-gray-200 hover:bg-gray-300 text-sm px-3 py-1 rounded w-full">Effacer</button>
+                        class="bg-white hover:bg-gray-300 text-sm px-3 py-1 rounded w-full">Effacer</button>
                     <button id="saveBtn"
-                        class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded w-full">Valider</button>
+                        class="bg-cta hover:bg-hoverCta text-white text-sm px-3 py-1 rounded w-full">Valider</button>
                 </div>
             </div>
         </div>
- 
+
         <div class="text-center">
-            <button @click="submitRating" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow">
+            <button @click="submitRating"
+                class="bg-cta hover:bg-hoverCta text-white text-sm px-6 py-2 rounded-lg shadow">
                 Envoyer
             </button>
         </div>
     </main>
- 
+
     <div x-show="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
         x-transition>
         <div class="bg-white p-8 rounded-xl shadow-xl max-w-md w-full text-center space-y-4">
-            <p class="text-gray-800 text-lg">Merci pour votre avis !</p>
-            <a href="index.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+            <p class="text-lg font-bold">Merci pour votre avis !</p>
+            <a href="index.html" class="inline-block bg-cta hover:bg-hoverCta text-white px-4 py-2 rounded">
                 Retour à l'accueil
             </a>
         </div>
     </div>
- 
-    <footer class="bg-blue-600 p-4 text-white text-center mt-8">
+
+    <footer class="bg-bleu p-4 text-white text-center">
         <p>&copy; 2025 - MyDigital School</p>
     </footer>
- 
+
     <script type="module" src="/src/js/main.js"></script>
     <script>
         const canvas = document.getElementById("signature-pad");
         const ctx = canvas.getContext("2d");
- 
+
         canvas.width = 300;
         canvas.height = 300;
- 
+
         let drawing = false;
- 
+
         function startDrawing(e) {
             drawing = true;
             ctx.beginPath();
             ctx.moveTo(e.offsetX, e.offsetY);
         }
- 
+
         function draw(e) {
             if (!drawing) return;
             ctx.lineTo(e.offsetX, e.offsetY);
             ctx.stroke();
         }
- 
+
         function stopDrawing() {
             drawing = false;
         }
- 
+
         canvas.addEventListener("mousedown", startDrawing);
         canvas.addEventListener("mousemove", draw);
         canvas.addEventListener("mouseup", stopDrawing);
         canvas.addEventListener("mouseout", stopDrawing);
- 
+
         document.getElementById("clearBtn").addEventListener("click", () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         });
- 
+
         document.getElementById("saveBtn").addEventListener("click", () => {
             const signature = canvas.toDataURL();
             console.log("Signature enregistrée:", signature);
@@ -179,19 +180,19 @@
                     heure: '',
                     lieu: ''
                 },
- 
+
                 init() {
                     const getCookie = (name) => {
                         let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
                         return match ? decodeURIComponent(match[2]) : null;
                     };
- 
+
                     this.courseInfo.intervenant = getCookie('intervenant') || 'Intervenant Inconnu';
                     this.courseInfo.date = getCookie('date') || 'Date inconnue';
                     this.courseInfo.heure = getCookie('heure') || 'Heure inconnue';
                     this.courseInfo.lieu = getCookie('lieu') || 'Lieu inconnu';
                 },
- 
+
                 submitRating() {
                     this.showModal = true;
                 }
@@ -205,5 +206,5 @@
         document.cookie = "lieu=Salle 203";
     </script>
 </body>
- 
+
 </html>
