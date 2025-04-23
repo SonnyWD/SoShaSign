@@ -88,9 +88,13 @@
           studentId = "student_" + Date.now();
           localStorage.setItem("studentId", studentId);
         }
-    
-        localStorage.setItem(`${studentId}_presence`, "présent");
-        console.log("Signature enregistrée:", signature);
+
+
+        const stagiaireNom = new URLSearchParams(window.location.search).get('stagiaire');
+
+        if (stagiaireNom) {
+          localStorage.setItem(`${stagiaireNom}_presence`, "présent");
+        }
     
         window.location.href = "seance.html";
       });
