@@ -9,6 +9,10 @@ export default {
         fontFamily: {
           'sans': ['ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
         },
+        colors: {
+          beige: '#fffcf7',
+          bleu: '#1A202C',
+        },
       },
     },
     plugins: [],
