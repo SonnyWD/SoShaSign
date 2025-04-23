@@ -1,39 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Séance</title>
-    <script type="module" src="/src/js/main.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Séance</title>
+  <script type="module" src="/src/js/main.js"></script>
+  <script src="https://unpkg.com/alpinejs" defer></script>
+  <link rel="stylesheet" href="src/css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <body class="bg-gray-100 font-sans min-h-screen flex flex-col">
-        <nav class="bg-blue-600 p-4">
-            <img src="" alt="Logo" class="h-8 w-8 inline-block mr-4">
-            <ul class="flex space-x-4 text-white">
-                <li><a href="index.html">Acceuil</a></li>
-                <li><a href="#">Historique</a></li>
-                <li><a href="#">Questionnaire</a></li>
-            </ul>
-        </nav>
-        <main class="flex-grow container mx-auto p-4" x-data="{
-            cours: new URLSearchParams(window.location.search).get('cours')
-          }">
-            <h1 class="titre-cours text-2xl font-bold mb-4">Cours : <span x-text="cours"></span></h1>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://localhost:5173/signature-stagiaire.html?cours=css" alt="QR Code">
-            <div class="container-1">
-                <h2>Stagiaires</h2>
-                <h2>Présence</h2>
-            </div>
-            
-            <ul x-data="{ etudiants: ['Sonny', 'Shannon', 'Eric', 'Lisa', 'Ariella', 'Gvanca', 'Tom', 'Nelly', 'Mattis'] }">
-                <template x-for="e in etudiants">
-                    <li x-text="e"></li>
-                 </template>
-             </ul>
-        </main>
-        <footer class="bg-blue-600 p-4 text-white text-center">
-            <p>&copy; 2025 - MyDigital School</p>
-        </footer>
+<body class="bg-beige font-sans min-h-screen flex flex-col justify-between">
+  <nav class="bg-beige p-4 flex justify-between pr-20 pl-20 border-b border-bleu">
+    <img src="public/SVG/logo-soshasignFichier 1.svg" alt="Logo" class="h-10 inline-block mr-4">
+    <ul class="flex space-x-4 text-bleu">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="#">Historique</a></li>
+      <li><a href="questionnaire.html">Questionnaire</a></li>
+    </ul>
+  </nav>
+
+  <main class="flex-grow container mx-auto p-4"
+        x-data="{
+          cours: new URLSearchParams(window.location.search).get('cours') || 'default',
+          qrType: 'cours',  // valeur par défaut
+          etudiants: [
+            { nom: 'Sonny', present: JSON.parse(localStorage.getItem('student_1_presence')) || null },
+            { nom: 'Shannon', present: JSON.parse(localStorage.getItem('student_2_presence')) || null },
+            { nom: 'Eric', present: JSON.parse(localStorage.getItem('student_3_presence')) || null },
+            { nom: 'Lisa', present: JSON.parse(localStorage.getItem('student_4_presence')) || null }
+          ],
+          updatePresence(student, presence) {
+            student.present = presence;
+            localStorage.setItem(`${student.nom}_presence`, JSON.stringify(presence));
+          }
+        }">
+
+    <h1 class="text-2xl font-bold text-bleu mb-6">Cours : <span x-text="cours"></span></h1>
+
+    <div class="mb-6">
+      <label for="qr" class="block mb-2 text-lg font-semibold text-bleu">Afficher le QR Code de :</label>
+      <select id="qr" x-model="qrType" class="p-2 border border-gray-300 rounded-md">
+        <option value="cours">Ce cours</option>
+        <option value="questionnaire">Le questionnaire</option>
+      </select>
+    </div>
+
+    <div class="qr-container">
+      <a :href="qrType === 'cours' 
+            ? `http://localhost:5173/signature-stagiaire.html?cours=${cours}`
+            : `http://localhost:5173/questionnaire.html?cours=${cours}`">
+        <img :src="qrType === 'cours' 
+                ? `https://api.qrserver.com/v1/create-qr-code/?data=http://localhost:5173/signature-stagiaire.html?cours=${cours}`
+                : `https://api.qrserver.com/v1/create-qr-code/?data=http://localhost:5173/questionnaire.html?cours=${cours}`"
+             alt="QR Code" class="rounded shadow-md">
+      </a>
+    </div>
+
+    <div class="table-container">
+      <table class="table-style">
+        <thead class="bg-bleu text-white">
+          <tr>
+            <th class="text-left px-6 py-4">Stagiaire</th>
+            <th class="text-right px-6 py-4"></th>
+            <th class="text-right px-6 py-4">Présence</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template x-for="e in etudiants" :key="e.nom">
+            <tr class="border-t border-gray-200">
+              <!-- Nom du stagiaire -->
+              <td class="px-6 py-4 text-left">
+                <span x-text="e.nom"></span>
+              </td>
+              <!-- Présence -->
+              <td class="px-6 py-4 text-right font-semibold"
+                  :class="e.present === null ? '' : e.present ? 'text-green-600' : 'text-red-500'"
+                  x-text="e.present === null ? '' : e.present ? 'Présent' : 'Absent'">
+              </td>
+              <!-- Boutons pour changer l'état de présence -->
+              <td class="px-6 py-4 text-right">
+                <button @click="updatePresence(e, true)" class="bg-green-500 text-white p-1 rounded">Présent</button>
+                <button @click="updatePresence(e, false)" class="bg-red-500 text-white p-1 rounded">Absent</button>
+              </td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer class="bg-bleu p-4 text-white text-center">
+    <p>&copy; 2025 - MyDigital School</p>
+  </footer>
 </body>
 </html>

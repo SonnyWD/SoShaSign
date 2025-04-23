@@ -4,10 +4,11 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>My Digital School - Développement côté client</title>
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     </head>
     <body class="bg-beige font-sans min-h-screen flex flex-col justify-between">
         <nav class="bg-beige p-4 flex justify-between pr-20 pl-20 border-b border-bleu">
-            <img src="public/logo sosha sign blanc.png" alt="Logo" class="h-8 w-8 inline-block mr-4">
+            <img src="public/SVG/logo-soshasignFichier 1.svg" alt="Logo" class="h-10 inline-block mr-4">
             <ul class="flex space-x-4 text-bleu">
                 <li><a href="index.html">Cours</a></li>
                 <li><a href="#">Historique</a></li>
@@ -19,20 +20,21 @@
                 <h2 class="text-2xl font-semibold text-gray-800 mb-4">Cours du matin</h2>
                 <div x-data="{
                     cours: [
-                        { nom: 'Framework CSS', enseignant: 'Tony Botalla', date: '22 avril 2025', lieu: 'La Cocagne' }
+                        { nom: 'Framework CSS', enseignant: 'Tony Botalla', date: '22 avril 2025', heure: '9h-12h30', lieu: 'La Cocagne' }
                     ]
                 }">
                     <template x-for="(c, i) in cours" :key="i">
                         <div class="cours mb-4 p-4-0 flex justify-between">
                             <div class="infos-cours text-gray-700">
                                 <strong x-text="c.nom" class="text-lg font-bold"></strong>
-                                <div class="mt-2">
-                                    <span>Enseignant: <span x-text="c.enseignant"></span></span><br>
-                                    <span>Date: <span x-text="c.date"></span></span><br>
-                                    <span>Lieu: <span x-text="c.lieu"></span></span>
+                                <div class="mt-2 flex">
+                                    <span class="mr-5 p-2 pl-0 border-r-2 border-bleu">Enseignant : <span x-text="c.enseignant"></span></span><br>
+                                    <span class="mr-5 p-2 border-r-2 border-bleu">Date : <span x-text="c.date"></span></span><br>
+                                    <span class="mr-5 p-2 border-r-2 border-bleu">Heure : <span x-text="c.heure"></span></span><br>
+                                    <span class="mr-5 p-2">Lieu: <span x-text="c.lieu"></span></span>
                                 </div>
                             </div>
-                            <a :href="`seance.html?cours=${encodeURIComponent(c.nom)}`" class="cta inline-block self-center bg-cta text-white rounded-full hover:bg-blue-700 transition px-4 py-2">Séance</a>
+                            <a :href="`seance.html?cours=${encodeURIComponent(c.nom)}`" class="cta inline-block self-center bg-cta text-white rounded-full hover:bg-hoverCta transition px-4 py-2">Séance</a>
                         </div>
                     </template>
                 </div>
@@ -48,10 +50,11 @@
                         <div class="cours mb-4 p-4-0 flex justify-between">
                             <div class="infos-cours text-gray-700">
                                 <strong x-text="c.nom" class="text-lg font-bold"></strong>
-                                <div class="mt-2">
-                                    <span>Enseignant: <span x-text="c.enseignant"></span></span><br>
-                                    <span>Date: <span x-text="c.date"></span></span><br>
-                                    <span>Lieu: <span x-text="c.lieu"></span></span>
+                                <div class="mt-2 flex">
+                                    <span class="mr-5 p-2 pl-0 border-r-2 border-bleu">Enseignant : <span x-text="c.enseignant"></span></span><br>
+                                    <span class="mr-5 p-2 border-r-2 border-bleu">Date : <span x-text="c.date"></span></span><br>
+                                    <span class="mr-5 p-2 border-r-2 border-bleu">Heure : <span x-text="c.heure"></span></span><br>
+                                    <span class="mr-5 p-2">Lieu: <span x-text="c.lieu"></span></span>
                                 </div>
                             </div>
                             <a :href="`seance.html?cours=${encodeURIComponent(c.nom)}`" class="cta inline-block self-center bg-cta text-white rounded-full hover:bg-blue-700 transition px-4 py-2">Séance</a>

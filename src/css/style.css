@@ -6,3 +6,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+  .qr-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .qr-container img {
+    max-width: 200px; 
+  }
+
+  /* Style pour centrer le tableau */
+.table-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem; /* Marge en bas */
+  }
+  
+  /* Style pour le tableau */
+  .table-style {
+    width: 90%; /* Tableau à 90% de la largeur du conteneur */
+    background-color: white;
+    border: 1px solid #e0e0e0; /* Bordure gris clair */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+  }
+
+  .table-style td.text-left {
+    text-align: left; /* Change l'alignement de droite à gauche */
+  }
+
+  .table-style td.text-right {
+    text-align: right;
+  }
