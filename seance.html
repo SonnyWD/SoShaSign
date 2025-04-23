@@ -22,21 +22,29 @@
   <main class="flex-grow container mx-auto p-4"
         x-data="{
           cours: new URLSearchParams(window.location.search).get('cours') || 'default',
-          qrType: 'cours',  // valeur par défaut
+          qrType: 'cours',  
           etudiants: [
             { nom: 'Sonny', present: JSON.parse(localStorage.getItem('student_1_presence')) || null },
             { nom: 'Shannon', present: JSON.parse(localStorage.getItem('student_2_presence')) || null },
             { nom: 'Eric', present: JSON.parse(localStorage.getItem('student_3_presence')) || null },
             { nom: 'Lisa', present: JSON.parse(localStorage.getItem('student_4_presence')) || null }
           ],
-          updatePresence(student, presence) {
-            student.present = presence;
-            localStorage.setItem(`${student.nom}_presence`, JSON.stringify(presence));
+          checkAndUpdatePresence() {
+            const signatureStagiaire = new URLSearchParams(window.location.search).get('stagiaire');
+                if (signatureStagiaire) {
+                    const stagiaire = this.etudiants.find(e => e.nom.toLowerCase() === signatureStagiaire.toLowerCase());
+                if (stagiaire) {
+                    stagiaire.present = true; // Marquer le stagiaire comme présent
+                    localStorage.setItem(`${stagiaire.nom}_presence`, JSON.stringify(true));
+                }
+            }
           }
-        }">
+        }" 
+        x-init="checkAndUpdatePresence()">
 
     <h1 class="text-2xl font-bold text-bleu mb-6">Cours : <span x-text="cours"></span></h1>
 
+    <!-- QR Code -->
     <div class="mb-6">
       <label for="qr" class="block mb-2 text-lg font-semibold text-bleu">Afficher le QR Code de :</label>
       <select id="qr" x-model="qrType" class="p-2 border border-gray-300 rounded-md">
@@ -56,12 +64,12 @@
       </a>
     </div>
 
+    <!-- Tableau des stagiaires -->
     <div class="table-container">
       <table class="table-style">
         <thead class="bg-bleu text-white">
           <tr>
             <th class="text-left px-6 py-4">Stagiaire</th>
-            <th class="text-right px-6 py-4"></th>
             <th class="text-right px-6 py-4">Présence</th>
           </tr>
         </thead>
@@ -77,16 +85,12 @@
                   :class="e.present === null ? '' : e.present ? 'text-green-600' : 'text-red-500'"
                   x-text="e.present === null ? '' : e.present ? 'Présent' : 'Absent'">
               </td>
-              <!-- Boutons pour changer l'état de présence -->
-              <td class="px-6 py-4 text-right">
-                <button @click="updatePresence(e, true)" class="bg-green-500 text-white p-1 rounded">Présent</button>
-                <button @click="updatePresence(e, false)" class="bg-red-500 text-white p-1 rounded">Absent</button>
-              </td>
             </tr>
           </template>
         </tbody>
       </table>
     </div>
+
   </main>
 
   <footer class="bg-bleu p-4 text-white text-center">
